@@ -5,12 +5,12 @@
         <div class="row g-0 border rounded overflow-hidden flex-md-row mb-4 shadow-sm h-md-250 position-relative">
             <div class="col p-4 d-flex flex-column position-static">
                 {% if object %}
-                <p class="mb-2">Время начала рассылки: {{ setting.start_time }}</p>
-                <p class="mb-2">Время окончания рассылки: {{ setting.end_time }}</p>
-                <p class="mb-2">Период рассылки: {{ setting.period }}</p>
-                <p class="mb-2">Статус рассылки: {{ setting.status }}</p>
-                <p class="mb-2">Сообщение: {{ setting.message }} </p>
-                <p class="mb-2">Список клиентов: {{ setting.clients.mailing_settings }}</p>
+                <p class="mb-2">Время начала рассылки: {{ object.start_time }}</p>
+                <p class="mb-2">Время окончания рассылки: {{ object.end_time }}</p>
+                <p class="mb-2">Период рассылки: {{ object.period }}</p>
+                <p class="mb-2">Статус рассылки: {{ object.status }}</p>
+                <p class="mb-2">Сообщение: {{ object.message }} </p>
+                <p class="mb-2">Список клиентов: {{ object.clients.mailing_settings }}</p>
                 <div class="col mb-2">
                 <a class="btn btn-outline-info rounded-pill" href="{% url 'main:setting_list' %}">
                     Назад

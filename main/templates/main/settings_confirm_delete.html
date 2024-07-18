@@ -12,17 +12,17 @@
                     {% csrf_token %}
                     <p>Хотите удалить данные настройки для сообщения {{ object.message }} ?</p>
                     <div class="mb-1 text-body-secondary">
-                        Список клиентов: {{ object.mailing_settings }}
+                        Список клиентов: {{ object.mailing_settings.all }}
                     </div>
                     <button type="submit" class="btn btn-danger">Подтвердить</button>
-                    <a href="{% url 'main:settings_list' %}" class="btn btn-warning">Отмена</a>
+                    <a href="{% url 'main:setting_list' %}" class="btn btn-warning">Отмена</a>
                 </form>
             </div>
         </div>
     </div>
 </div>
 <div class="col-12 mb-5">
-    <a class="btn btn-outline-secondary" href="{% url 'main:settings_list' %}"
+    <a class="btn btn-outline-secondary" href="{% url 'main:setting_list' %}"
        role="button">Назад</a>
 </div>
 {% endblock %}
