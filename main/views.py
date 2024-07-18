@@ -45,18 +45,19 @@ class ClientDeleteView(DeleteView):
 
 class SettingsListView(ListView):
     model = Settings
-    template_name = 'main/settings_list.html'
+    template_name = 'main/setting_list.html'
 
 
 class SettingsDetailView(DetailView):
     model = Settings
-    template_name = 'main/settings_detail.html'
+    template_name = 'main/setting_detail.html'
 
 
 class SettingsCreateView(CreateView):
     model = Settings
     success_url = reverse_lazy('main:setting_list')
     form_class = SettingsForm
+
 
 class SettingsUpdateView(UpdateView):
     model = Settings
@@ -94,3 +95,7 @@ class MessageUpdateView(UpdateView):
 class MessageDeleteView(DeleteView):
     model = Message
     success_url = reverse_lazy('main:message_list')
+
+
+class AttemptListView(ListView):
+    model = Attempt

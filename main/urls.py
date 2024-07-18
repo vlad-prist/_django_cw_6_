@@ -17,6 +17,7 @@ from main.views import (
     SettingsCreateView,
     SettingsUpdateView,
     SettingsDeleteView,
+    AttemptListView,
 )
 
 

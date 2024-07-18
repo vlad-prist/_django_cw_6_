@@ -1,5 +1,5 @@
 from django.contrib import admin
-from main.models import Client, Message
+from main.models import Client, Message, Attempt
 
 
 @admin.register(Client)
@@ -14,3 +14,9 @@ class MessageAdmin(admin.ModelAdmin):
     list_display = ('id', 'subject', 'letter', 'owner',)
     list_filter = ('subject', 'owner',)
     search_fields = ('subject', 'owner',)
+
+
+@admin.register(Attempt)
+class AttemptAdmin(admin.ModelAdmin):
+    list_display = ('last_try', 'client', 'settings', 'status', 'server_response',)
+
