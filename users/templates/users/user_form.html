@@ -1,0 +1,30 @@
+{% extends 'main/base.html' %}
+{% block content %}
+<section class="py-5 text-center container">
+    <div class="col-lg-6 col-md-8 mx-auto">
+        <h1 class="font-weight-bold">Редактирование профиля</h1>
+    </div>
+</section>
+<div class="container">
+    <form method="post" enctype="multipart/form-data">
+        <div class="col mb-5">
+            <div class="row">
+                <div class="col-6">
+                    <div class="card">
+                        <div class="card-body">
+                            {% csrf_token %}
+                            {{ form.as_p }}
+                            <button type="submit" class="btn btn-success">
+                                Сохранить
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+    <div class="col-12 mb-5">
+        <a class="btn btn-outline-secondary" href="{% url 'main:index' %}" role="button">Назад</a>
+    </div>
+</div>
+{% endblock %}

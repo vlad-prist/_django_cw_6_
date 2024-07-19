@@ -1,0 +1,31 @@
+{% extends 'main/base.html' %}
+{% block content %}
+<section class="py-5 text-center container">
+</section>
+<div class="container">
+    <form method="post" enctype="multipart/form-data">
+        <div class="col mb-5">
+            <div class="row">
+                <div class="col-6">
+                    <div class="card">
+                        <div class="card-header">
+                            <h3 class="card-title">Вход</h3>
+                        </div>
+                        <div class="card-body">
+                            {% csrf_token %}
+                            {{ form.as_p }}
+                            <button type="submit" class="btn btn-success">Войти</button>
+                            <a href="{% url 'users:generate-password' %}" type="submit" class="btn btn-outline-success">
+                                Восстановить пароль
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+    <div class="col-12 mb-5">
+        <a class="btn btn-outline-secondary" href="{% url 'main:index' %}" role="button">Назад</a>
+    </div>
+</div>
+{% endblock %}
