@@ -1,25 +1,32 @@
+{% extends 'main/base.html' %}
 {% block content %}
-<article class="blog-post">
-    <h3>Отчет проведенных рассылок</h3>
-    <p>В данной таблице представлены попытки отправки сообщений</p>
-    <table class="table">
-        <thead>
-        <tr>
-            <th>Рассылка</th>
-            <th>Время</th>
-            <th>Статус</th>
-            <th>Ответ сервера</th>
-        </tr>
-        </thead>
-        <tbody>
-        {% for attempt in object_list %}
-        <tr>
-            <td>{{ attempt.settings.message }}</td>
-            <td>{{ attempt.last_try }}</td>
-            <td>{{ attempt.status }}</td>
-            <td>{{ attempt.server_response }}</td>
-        </tr>
-        {% endfor %}
-    </table>
-</article>
+<div class="container">
+    <div class="p-4 p-md-5 mb-4 rounded text-body-emphasis bg-body-secondary">
+        <article class="blog-post">
+            <h3>Отчет проведенных рассылок</h3>
+            <p>В данной таблице представлены попытки отправки сообщений</p>
+            <table class="table">
+                <thead>
+                <tr>
+                    <th>Рассылка</th>
+                    <th>Время</th>
+                    <th>Статус</th>
+                    <th>Ответ сервера</th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for attempt in object_list %}
+                <tr>
+                    <td>{{ attempt.settings.message }}</td>
+                    <td>{{ attempt.last_try }}</td>
+                    <td>{{ attempt.status }}</td>
+                    <td>{{ attempt.server_response }}</td>
+                </tr>
+                {% endfor %}
+            </table>
+        </article>
+    </div>
+</div>
+
 {% endblock %}
+
