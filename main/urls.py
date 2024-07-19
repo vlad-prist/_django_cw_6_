@@ -1,7 +1,7 @@
 from django.urls import path
 from main.apps import MainConfig
 from main.views import (
-    index,
+    #index,
     MessageListView,
     MessageDetailView,
     MessageCreateView,
@@ -24,7 +24,7 @@ from main.views import (
 app_name = MainConfig.name
 
 urlpatterns = [
-    path('', index, name='main_page'),
+    #path('', index, name='index'),
 
     path('clients/', ClientListView.as_view(), name='client_list'),
     path('clients/<int:pk>/', ClientDetailView.as_view(), name='client_detail'),
@@ -43,5 +43,6 @@ urlpatterns = [
     path('settings/create/', SettingsCreateView.as_view(), name='setting_create'),
     path('settings/update/<int:pk>/', SettingsUpdateView.as_view(), name='setting_update'),
     path('settings/delete/<int:pk>/', SettingsDeleteView.as_view(), name='setting_delete'),
+    path('', AttemptListView.as_view(), name='index'),
 
 ]

@@ -6,14 +6,14 @@ from main.models import Settings, Client, Message, Attempt
 from main.forms import SettingsForm
 
 
-def index(request):
-    if request.method == "POST":
-        name = request.POST.get("name")
-        email = request.POST.get("email")
-        message = request.POST.get("message")
-        print(f'{name} ({email}: {message})')
-
-    return render(request, 'main/main_page.html')
+# def index(request):
+#     if request.method == "POST":
+#         name = request.POST.get("name")
+#         email = request.POST.get("email")
+#         message = request.POST.get("message")
+#         print(f'{name} ({email}: {message})')
+#
+#     return render(request, 'main/index.html')
 
 
 class ClientListView(ListView):
