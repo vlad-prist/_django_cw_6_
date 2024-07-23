@@ -24,6 +24,7 @@ INSTALLED_APPS = [
     'main',
     'users',
     'django_apscheduler',
+    'blog',
 ]
 
 MIDDLEWARE = [
@@ -107,11 +108,14 @@ EMAIL_HOST = os.getenv('EMAIL_HOST')
 EMAIL_PORT = os.getenv('EMAIL_PORT')
 EMAIL_HOST_USER = os.getenv('EMAIL_HOST_USER')
 EMAIL_HOST_PASSWORD = os.getenv('EMAIL_HOST_PASSWORD')
-EMAIL_USE_TLS = os.getenv('EMAIL_USE_TLS') == 'False'
-EMAIL_USE_SSL = os.getenv('EMAIL_USE_SSL') == 'True'
+EMAIL_USE_TLS = False
+EMAIL_USE_SSL = True
 SERVER_EMAIL = EMAIL_HOST_USER
 DEFAULT_FROM_EMAIL = EMAIL_HOST_USER
 
 # https://pypi.org/project/django-apscheduler/
 APSCHEDULER_DATETIME_FORMAT = "d.m.Y, G:i"
 APSCHEDULER_RUN_NOW_TIMEOUT = 25
+
+MEDIA_URL = '/media/'
+MEDIA_ROOT = BASE_DIR / 'media'
