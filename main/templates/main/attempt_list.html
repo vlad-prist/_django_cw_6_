@@ -19,7 +19,7 @@
                 <tr>
                     <td>{{ attempt.settings.message }}</td>
                     <td>{{ attempt.last_try }}</td>
-                    <td>{{ attempt.status }}</td>
+                    <td>{{ attempt.get_status_display }}</td>
                     <td>{{ attempt.server_response }}</td>
                 </tr>
                 {% endfor %}
