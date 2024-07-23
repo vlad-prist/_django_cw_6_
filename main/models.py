@@ -11,6 +11,7 @@ class Client(models.Model):
     last_name = models.CharField(max_length=150, verbose_name="Фамилия", **NULLABLE)
     comment = models.TextField(verbose_name="Комментарий", **NULLABLE)
     owner = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
+    is_banned = models.BooleanField(default=False, verbose_name="Блокирован")
 
     def __str__(self):
         return f"{self.first_name} {self.last_name} - {self.email}"
@@ -18,6 +19,10 @@ class Client(models.Model):
     class Meta:
         verbose_name = "клиент"
         verbose_name_plural = "клиенты"
+        permissions = [
+            ("see_list_of_clients", "Просмотр списка пользователей сервиса"),
+            ("ban_clients", "Блокирование пользователей сервиса"),
+        ]
 
 
 class Settings(models.Model):
@@ -42,8 +47,8 @@ class Settings(models.Model):
         (STATUS_DONE, "Завершена"),
     )
 
-    start_time = models.DateTimeField(verbose_name="Время начала")
-    end_time = models.DateTimeField(verbose_name="Время завершения", **NULLABLE)
+    start_time = models.DateTimeField(verbose_name="Время начала", help_text='ДД.ММ.ГГГГ 00:00')
+    end_time = models.DateTimeField(verbose_name="Время завершения", help_text='ДД.ММ.ГГГГ 00:00', **NULLABLE)
     period = models.CharField(
         max_length=20,
         choices=PERIOD_CHOICES,
@@ -68,6 +73,12 @@ class Settings(models.Model):
     class Meta:
         verbose_name = "Настройки рассылки"
         verbose_name_plural = "Настройки рассылок"
+        permissions = [
+            ("see_any_mailing_settings", "Просмотр любых рассылок"),
+            ("switch_of_mailing_settings", "Отключение рассылки"),
+            ("change_mailing_settings", "Редактирование рассылки"),
+            ("manage_list_of_mailing_settings", "Управление списком рассылки"),
+        ]
 
 
 class Message(models.Model):
@@ -82,6 +93,9 @@ class Message(models.Model):
     class Meta:
         verbose_name = "Сообщение"
         verbose_name_plural = "Сообщения"
+        permissions = [
+            ("change_mailing_message", "Изменение сообщения"),
+        ]
 
 
 class Attempt(models.Model):
@@ -91,7 +105,7 @@ class Attempt(models.Model):
     STATUS_CHOICES = (
         (STATUS_OK, "Успешно"),
         (STATUS_FAILED, "Не удалось"),
-    )
+    ) #для отображения русского названия прописываем в шаблоне get_названиеполя_display
 
     last_try = models.DateTimeField(
         auto_now_add=True, verbose_name="Дата последней попытки"
@@ -110,4 +124,3 @@ class Attempt(models.Model):
     class Meta:
         verbose_name = "Попытка рассылки"
         verbose_name_plural = "Попытки рассылки"
-
