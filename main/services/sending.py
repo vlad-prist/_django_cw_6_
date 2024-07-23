@@ -18,7 +18,7 @@ def send_email(message_client, message_settings):
         Attempt.objects.create(
             status=Attempt.STATUS_OK,
             settings=message_settings,
-            client_id=message_client,
+            client=message_client,
         )
     except smtplib.SMTPException as e:
         Attempt.objects.create(
@@ -38,7 +38,7 @@ def send_all_mails():
 
             for mailing_client in mailing_settings.clients.all():
 
-                mailing_log = MailingLog.objects.filter(client=mailing_client.pk, settings=mailing_settings)
+                mailing_log = Attempt.objects.filter(client=mailing_client.pk, settings=mailing_settings)
 
                 if mailing_log.exists():
                     last_try_date = mailing_log.order_by('-last_try').first().last_try
