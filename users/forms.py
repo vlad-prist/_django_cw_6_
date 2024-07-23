@@ -8,6 +8,12 @@ class UserRegisterForm(UserCreationForm):
         model = User
         fields = ('email', 'password1', 'password2')
 
+    def clean_email(self):
+        email = self.cleaned_data.get('email')
+        if User.objects.filter(email=email).exists():
+            raise forms.ValidationError(f'Пользователь с почтой "{email}" уже существует!')
+        return email
+
 
 class UserProfileForm(UserChangeForm):
     class Meta:
