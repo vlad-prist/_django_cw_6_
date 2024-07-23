@@ -47,7 +47,7 @@ class ProfileView(UpdateView):
     form_class = UserProfileForm
 
     def get_success_url(self):
-        return reverse("main:main_page")
+        return reverse("main:index")
 
 
 class GeneratePasswordView(PasswordResetView):
