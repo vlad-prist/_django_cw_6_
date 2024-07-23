@@ -1,17 +1,19 @@
 {% extends 'main/base.html' %}
 {% block content %}
+{% if user.is_authenticated %}
 <div class="col-12 mb-5">
-    <a class="btn btn-outline-primary" href="{% url 'main:setting_create' %}">Добавить рассылку</a>
+    <a class="btn btn-outline-primary rounded-pill" href="{% url 'main:setting_create' %}">Добавить рассылку</a>
 </div>
 <div class="row mb-2">
     {% for setting in object_list %}
+    {% if perms.main.see_any_mailing_settings and perms.main.switch_of_mailing_settings or user == setting.owner %}
     <div class="col-md-6">
         <div class="row g-0 border rounded overflow-hidden flex-md-row mb-4 shadow-sm h-md-250 position-relative">
             <div class="col p-4 d-flex flex-column position-static">
                 <p class="mb-2">Время начала рассылки: {{ setting.start_time }}</p>
                 <p class="mb-2">Время окончания рассылки: {{ setting.end_time }}</p>
                 <p class="mb-2">Период рассылки: {{ setting.period }}</p>
-                <p class="mb-2">Статус рассылки: {{ setting.status }}</p>
+                <p class="mb-2">Статус рассылки: {{ setting.get_status_display }}</p>
                 <p class="mb-2">Сообщение: {{ setting.message }} </p>
                 {% for client in setting.clients.all %}
                 <p class="mb-2">Список клиентов: {{ client }}</p>
@@ -26,7 +28,9 @@
             </div>
         </div>
     </div>
+    {% endif %}
     {% endfor %}
+{% endif %}
 </div>
 <a class="btn btn-outline-secondary rounded-pill" href="{% url 'main:index' %}">На главную страницу</a>
 
