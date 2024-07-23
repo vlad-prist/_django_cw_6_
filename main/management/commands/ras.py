@@ -1,7 +1,7 @@
-# from apscheduler.schedulers.blocking import BlockingScheduler
+from apscheduler.schedulers.blocking import BlockingScheduler
 # BlockingScheduler Блокирует терминал, в отличии от BackgroundScheduler
 # завершить ctrl+C
-from apscheduler.schedulers.background import BackgroundScheduler
+# from apscheduler.schedulers.background import BackgroundScheduler
 from apscheduler.triggers.cron import CronTrigger
 from django.conf import settings
 from django.core.management.base import BaseCommand
@@ -21,12 +21,12 @@ class Command(BaseCommand):
     help = 'Runs APScheduler.'
 
     def handle(self, *args, **options):
-        scheduler = BackgroundScheduler(timezone=settings.TIME_ZONE)
+        scheduler = BlockingScheduler(timezone=settings.TIME_ZONE)
         scheduler.add_jobstore(DjangoJobStore(), "default")
 
         scheduler.add_job(
             send_all_mails,
-            trigger=CronTrigger(second="*/30"),  # Every 30 seconds
+            trigger=CronTrigger(minute="*/2"),  # Every 2 minutes
             id="sendmail",
             max_instances=10,
             replace_existing=True,
