@@ -1,11 +1,12 @@
 {% extends 'main/base.html' %}
 {% block content %}
+{% if user.is_authenticated %}
 <div class="col-12 mb-5">
-    <a class="btn btn-outline-primary" href="{% url 'main:message_create' %}">Добавить сообщение</a>
-
+    <a class="btn btn-outline-primary rounded-pill" href="{% url 'main:message_create' %}">Добавить сообщение</a>
 </div>
 <div class="row mb-2">
     {% for message in object_list %}
+    {% if perms.main.change_mailing_message or user == message.owner %}
     <div class="col-md-6">
         <div class="row g-0 border rounded overflow-hidden flex-md-row mb-4 shadow-sm h-md-250 position-relative">
             <div class="col p-4 d-flex flex-column position-static">
@@ -22,7 +23,9 @@
             </div>
         </div>
     </div>
+    {% endif %}
     {% endfor %}
+{% endif %}
 </div>
 <a class="btn btn-outline-secondary rounded-pill" href="{% url 'main:index' %}">На главную страницу</a>
 
