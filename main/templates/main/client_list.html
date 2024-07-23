@@ -1,15 +1,24 @@
 {% extends 'main/base.html' %}
 {% block content %}
+{% if user.is_authenticated %}
 <div class="col-12 mb-5">
-    <a class="btn btn-outline-primary" href="{% url 'main:client_create' %}">Добавить клиента</a>
-
+    <a class="btn btn-outline-primary rounded-pill" href="{% url 'main:client_create' %}">Добавить клиента</a>
 </div>
 <div class="row mb-2">
     {% for client in object_list %}
+    {% if perms.main.see_list_of_clients and perms.main.ban_clients or user == client.owner %}
     <div class="col-md-6">
         <div class="row g-0 border rounded overflow-hidden flex-md-row mb-4 shadow-sm h-md-250 position-relative">
             <div class="col p-4 d-flex flex-column position-static">
-                <strong class="d-inline-block mb-4 text-primary-emphasis">Клиент:</strong>
+                {% if client.is_banned %}
+                <div class="alert alert-danger" role="alert">
+                    <strong>Внимание!</strong> Пользователь заблокирован
+                </div>
+                {% elif not client.is_banned %}
+                <div class="alert alert-success" role="alert">
+                    Текущий пользователь
+                </div>
+                {% endif %}
                 <h4 class="mb-1">{{ client.email }}</h4>
                 {% if client.last_name %}
                 <div class="mb-1 text-body-secondary">{{ client.first_name }} {{ client.last_name }}</div>
@@ -27,7 +36,9 @@
             </div>
         </div>
     </div>
+    {% endif %}
     {% endfor %}
+{% endif %}
 </div>
 <a class="btn btn-outline-secondary rounded-pill" href="{% url 'main:index' %}">На главную страницу</a>
 
