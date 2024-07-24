@@ -9,7 +9,8 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'django-insecure-1wg=l0aq&ts#hnmba#-dxj@$zejm51u+q$17_hbkj+9z)b$2ny'
 
 
-DEBUG = True
+DEBUG = True # True - перечисление ошибок
+# False - ошибка "page not found"
 
 ALLOWED_HOSTS = ['*']
 
@@ -103,6 +104,7 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 AUTH_USER_MODEL = 'users.User'
 LOGIN_REDIRECT_URL = '/'
 LOGOUT_REDIRECT_URL = '/'
+LOGIN_URL = '/users/'
 
 EMAIL_HOST = os.getenv('EMAIL_HOST')
 EMAIL_PORT = os.getenv('EMAIL_PORT')
