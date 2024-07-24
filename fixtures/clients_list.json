@@ -1,0 +1,38 @@
+[
+{
+  "model": "main.client",
+  "pk": 1,
+  "fields": {
+    "email": "pristanskyvs@mail.ru",
+    "first_name": "Vlad",
+    "last_name": "Prist",
+    "comment": "Изучает Python, английский. Работал старшим экономистом на протяжении 3, лет, далее перешел на должность старшего бухгалтера, и дорос до должности начальник отдела",
+    "owner": 4,
+    "is_banned": false
+  }
+},
+{
+  "model": "main.client",
+  "pk": 2,
+  "fields": {
+    "email": "roddelt@mail.ru",
+    "first_name": "Petr",
+    "last_name": "Petrenko",
+    "comment": "Литературовед. Преподавал Английскую прозу в МГУ, занимается профессиональным теннисом, имеет в собственности собственный корт.",
+    "owner": 1,
+    "is_banned": false
+  }
+},
+{
+  "model": "main.client",
+  "pk": 6,
+  "fields": {
+    "email": "test@test.com",
+    "first_name": "test",
+    "last_name": "testov",
+    "comment": "for testing ban",
+    "owner": 3,
+    "is_banned": true
+  }
+}
+]

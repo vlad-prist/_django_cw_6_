@@ -1,0 +1,47 @@
+[
+{
+  "model": "main.settings",
+  "pk": 5,
+  "fields": {
+    "start_time": "2024-07-20T07:25:00Z",
+    "end_time": "2024-08-20T07:25:00Z",
+    "period": "Ежедневно",
+    "status": "created",
+    "message": 2,
+    "owner": 3,
+    "clients": [
+      2
+    ]
+  }
+},
+{
+  "model": "main.settings",
+  "pk": 7,
+  "fields": {
+    "start_time": "2024-07-23T08:20:00Z",
+    "end_time": "2024-08-23T08:20:00Z",
+    "period": "Ежедневно",
+    "status": "created",
+    "message": 2,
+    "owner": 1,
+    "clients": [
+      1
+    ]
+  }
+},
+{
+  "model": "main.settings",
+  "pk": 8,
+  "fields": {
+    "start_time": "2024-07-24T10:56:00Z",
+    "end_time": "2024-08-24T10:56:00Z",
+    "period": "Ежедневно",
+    "status": "created",
+    "message": 7,
+    "owner": 1,
+    "clients": [
+      1
+    ]
+  }
+}
+]
