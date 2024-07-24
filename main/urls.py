@@ -1,7 +1,7 @@
 from django.urls import path
 from main.apps import MainConfig
 from main.views import (
-    #index,
+    #index_data,
     MessageListView,
     MessageDetailView,
     MessageCreateView,
@@ -24,7 +24,7 @@ from main.views import (
 app_name = MainConfig.name
 
 urlpatterns = [
-    #path('', index, name='index'),
+    #path('', index_data, name='index'),
 
     path('clients/', ClientListView.as_view(), name='client_list'),
     path('clients/<int:pk>/', ClientDetailView.as_view(), name='client_detail'),

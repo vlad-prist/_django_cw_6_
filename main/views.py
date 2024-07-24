@@ -1,28 +1,27 @@
+from django.contrib.auth.mixins import LoginRequiredMixin, PermissionRequiredMixin
 from django.core.exceptions import PermissionDenied
 from django.shortcuts import render, get_object_or_404
 from django.urls import reverse_lazy
 from django.views.generic import ListView, CreateView, UpdateView, DeleteView, DetailView
+
+from blog.models import Blog
 from main.models import Settings, Client, Message, Attempt
 from main.forms import SettingsForm, SettingsManagerForm, ClientForm, ClientManagerForm, MessageForm, MessageManagerForm
 
 
-# def index(request):
-#     if request.method == "POST":
-#         name = request.POST.get("name")
-#         email = request.POST.get("email")
-#         message = request.POST.get("message")
-#         print(f'{name} ({email}: {message})')
-#
-#     return render(request, 'main/index.html')
-
-
-class ClientListView(ListView):
+class ClientListView(LoginRequiredMixin, ListView):
     model = Client
     template_name = 'main/client_list.html'
 
+    # permission_required = ['main.see_list_of_clients',
+    #                        'main.ban_clients', ]
+    #
     # def get_queryset(self):
     #     '''просмотр объектов только одного пользователя'''
-    #     return Client.objects.filter(owner=self.request.user)
+    #     if self.request.user.is_authenticated:
+    #         return Client.objects.filter(owner=self.request.user)
+    #     elif [self.request.user.has_perm(i for i in self.permission_required)]:
+    #         return Client.objects.filter(permissions=self.permission_required)
 
 
 class ClientDetailView(DetailView):
@@ -85,19 +84,10 @@ class SettingsListView(ListView):
     model = Settings
     template_name = 'main/setting_list.html'
 
-    # def get_queryset(self):
-    #     '''просмотр объектов только одного пользователя'''
-    #     return Settings.objects.filter(owner=self.request.user)
-
-    def get_context_data(self, **kwargs):
-        '''зачем эта функция?'''
-        context_data = super().get_context_data(**kwargs)
-        context_data['title'] = 'Список рассылки'
-        context_data['mailings_all'] = len(Settings.objects.all())
-        context_data['mailing_active'] = len(Settings.objects.filter(status='started'))
-        context_data['clients_unique'] = len(Client.objects.all().distinct())
-        # context_data['blog'] = Blog.objects.all()[:3] # выбор трех последних статей
-        return context_data
+    def get_queryset(self):
+        '''просмотр объектов только одного пользователя'''
+        if self.request.user.is_authenticated:
+            return Settings.objects.filter(owner=self.request.user)
 
 
 class SettingsDetailView(DetailView):
@@ -105,7 +95,7 @@ class SettingsDetailView(DetailView):
     template_name = 'main/setting_detail.html'
 
 
-class SettingsCreateView(CreateView):
+class SettingsCreateView(LoginRequiredMixin, PermissionRequiredMixin, CreateView):
     model = Settings
     success_url = reverse_lazy('main:setting_list')
     form_class = SettingsForm
@@ -124,7 +114,7 @@ class SettingsCreateView(CreateView):
         return kwargs
 
 
-class SettingsUpdateView(UpdateView):
+class SettingsUpdateView(LoginRequiredMixin, PermissionRequiredMixin, UpdateView):
     model = Settings
     success_url = reverse_lazy('main:setting_list')
     form_class = SettingsForm
@@ -169,8 +159,9 @@ class MessageListView(ListView):
     model = Message
     template_name = 'main/message_list.html'
 
-    # def get_queryset(self):
-    #     Message.objects.filter(owner=self.request.user)
+    def get_queryset(self):
+        if self.request.user.is_authenticated:
+            return Message.objects.filter(owner=self.request.user)
 
 
 class MessageDetailView(DetailView):
@@ -178,7 +169,7 @@ class MessageDetailView(DetailView):
     template_name = 'main/message_detail.html'
 
 
-class MessageCreateView(CreateView):
+class MessageCreateView(LoginRequiredMixin, PermissionRequiredMixin, CreateView):
     model = Message
     form_class = MessageForm
     success_url = reverse_lazy('main:message_list')
@@ -197,7 +188,7 @@ class MessageCreateView(CreateView):
         return kwargs
 
 
-class MessageUpdateView(UpdateView):
+class MessageUpdateView(LoginRequiredMixin, PermissionRequiredMixin, UpdateView):
     model = Message
     success_url = reverse_lazy('main:message_list')
     form_class = MessageForm
@@ -237,6 +228,13 @@ class MessageDeleteView(DeleteView):
 
 class AttemptListView(ListView):
     model = Attempt
-    extra_context = {
-        'attempt_list': model,
-    }
+
+    def get_context_data(self, **kwargs):
+        '''метод для отображения общей информации на главной страницы'''
+        context = super().get_context_data(**kwargs)
+        context['title'] = 'Список рассылок'
+        context['mailings_all'] = len(Settings.objects.all())
+        context['mailing_active'] = len(Settings.objects.filter(status='started'))
+        context['clients_unique'] = len(Client.objects.all().distinct()) #distinct - уникальные объекты
+        context['blog'] = Blog.objects.all()[:3] # выбор трех последних статей
+        return context

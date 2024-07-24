@@ -1,32 +1,43 @@
 {% extends 'main/base.html' %}
 {% block content %}
-<div class="container">
-    <div class="p-4 p-md-5 mb-4 rounded text-body-emphasis bg-body-secondary">
-        <article class="blog-post">
-            <h3>Отчет проведенных рассылок</h3>
-            <p>В данной таблице представлены попытки отправки сообщений</p>
-            <table class="table">
-                <thead>
-                <tr>
-                    <th>Рассылка</th>
-                    <th>Время</th>
-                    <th>Статус</th>
-                    <th>Ответ сервера</th>
-                </tr>
-                </thead>
-                <tbody>
-                {% for attempt in object_list %}
-                <tr>
-                    <td>{{ attempt.settings.message }}</td>
-                    <td>{{ attempt.last_try }}</td>
-                    <td>{{ attempt.get_status_display }}</td>
-                    <td>{{ attempt.server_response }}</td>
-                </tr>
-                {% endfor %}
-            </table>
-        </article>
-    </div>
+
+<div class="mb-4">
+    <table class="table text-center mb-4">
+        <h3 class="mb-2">{{ title }}</h3>
+        <tr>
+            <th><p>Количество рассылок</p></th>
+            <th><p>Количество активных рассылок</p></th>
+            <th><p>Количество уникальных клиентов</p></th>
+        </tr>
+        <body>
+        <tr>
+            <td><p>{{ mailings_all }}</p></td>
+            <td><p>{{ mailing_active }}</p></td>
+            <td><p>{{ clients_unique }}</p></td>
+        </tr>
+        </body>
+    </table>
+    <table class="table text-center mb-4">
+        <h3 class="mb-2">Последние статьи</h3>
+        <tr>
+            <th><p>Тема статьи</p></th>
+            <th><p>Содержание статьи</p></th>
+            <th><p>Дата публикации</p></th>
+            <th><p>Количество просмотров</p></th>
+        </tr>
+        <body>
+        {% for one_blog in blog %}
+        <tr>
+            <td><p>{{ one_blog.title }}</p></td>
+            <td><p>{{ one_blog.body|truncatechars:50 }}</p></td>
+            <td><p>{{ one_blog.created_at }}</p></td>
+            <td><p>{{ one_blog.views_count }}</p></td>
+        </tr>
+        {% endfor %}
+        </body>
+    </table>
 </div>
 
-{% endblock %}
 
+
+{% endblock %}
