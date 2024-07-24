@@ -188,7 +188,7 @@ class MessageCreateView(LoginRequiredMixin, CreateView):
         return kwargs
 
 
-class MessageUpdateView(LoginRequiredMixin, PermissionRequiredMixin, UpdateView):
+class MessageUpdateView(LoginRequiredMixin, UpdateView):
     model = Message
     success_url = reverse_lazy('main:message_list')
     form_class = MessageForm
