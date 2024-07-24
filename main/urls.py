@@ -1,7 +1,8 @@
 from django.urls import path
+from django.views.decorators.cache import cache_page
+
 from main.apps import MainConfig
 from main.views import (
-    #index_data,
     MessageListView,
     MessageDetailView,
     MessageCreateView,
@@ -24,9 +25,7 @@ from main.views import (
 app_name = MainConfig.name
 
 urlpatterns = [
-    #path('', index_data, name='index'),
-
-    path('clients/', ClientListView.as_view(), name='client_list'),
+    path('clients/', cache_page(60)(ClientListView.as_view()), name='client_list'),
     path('clients/<int:pk>/', ClientDetailView.as_view(), name='client_detail'),
     path('clients/create/', ClientCreateView.as_view(), name='client_create'),
     path('clients/update/<int:pk>/', ClientUpdateView.as_view(), name='client_update'),
@@ -38,11 +37,10 @@ urlpatterns = [
     path('message/update/<int:pk>/', MessageUpdateView.as_view(), name='message_update'),
     path('message/delete/<int:pk>/', MessageDeleteView.as_view(), name='message_delete'),
 
-    path('settings/', SettingsListView.as_view(), name='setting_list'),
+    path('settings/', cache_page(60)(SettingsListView.as_view()), name='setting_list'),
     path('settings/<int:pk>/', SettingsDetailView.as_view(), name='setting_detail'),
     path('settings/create/', SettingsCreateView.as_view(), name='setting_create'),
     path('settings/update/<int:pk>/', SettingsUpdateView.as_view(), name='setting_update'),
     path('settings/delete/<int:pk>/', SettingsDeleteView.as_view(), name='setting_delete'),
     path('', AttemptListView.as_view(), name='index'),
-
 ]
