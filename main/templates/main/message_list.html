@@ -6,11 +6,13 @@
 </div>
 <div class="row mb-2">
     {% for message in object_list %}
-    {% if perms.main.change_mailing_message or user == message.owner %}
+
     <div class="col-md-6">
         <div class="row g-0 border rounded overflow-hidden flex-md-row mb-4 shadow-sm h-md-250 position-relative">
             <div class="col p-4 d-flex flex-column position-static">
-                <strong class="d-inline-block mb-2 text-primary-emphasis">Тема письма:</strong>
+                <p class="card-text mb-4">Автор письма:
+                    <strong class="d-inline-block mb-2 text-primary-emphasis">{{ message.owner }}</strong>
+                </p>
                 <h4 class="mb-2">{{ message.subject }}</h4>
                 <p class="card-text mb-4">{{ message.letter|truncatechars:100 }}</p>
                 <a href="{% url 'main:message_detail' message.pk %}"
@@ -23,9 +25,9 @@
             </div>
         </div>
     </div>
-    {% endif %}
+
     {% endfor %}
-{% endif %}
+    {% endif %}
 </div>
 <a class="btn btn-outline-secondary rounded-pill" href="{% url 'main:index' %}">На главную страницу</a>
 

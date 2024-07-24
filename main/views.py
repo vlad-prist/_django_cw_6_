@@ -13,16 +13,13 @@ class ClientListView(LoginRequiredMixin, ListView):
     model = Client
     template_name = 'main/client_list.html'
 
-    # permission_required = ['main.see_list_of_clients',
-    #                        'main.ban_clients', ]
-    #
-    # def get_queryset(self):
-    #     '''просмотр объектов только одного пользователя'''
-    #     if self.request.user.is_authenticated:
-    #         return Client.objects.filter(owner=self.request.user)
-    #     elif [self.request.user.has_perm(i for i in self.permission_required)]:
-    #         return Client.objects.filter(permissions=self.permission_required)
-
+    def get_queryset(self):
+        '''просмотр объектов только одного пользователя'''
+        if self.request.user.is_superuser:
+            return Client.objects.all()
+        elif self.request.user.is_authenticated:
+            return Client.objects.filter(owner=self.request.user)
+        raise PermissionDenied
 
 class ClientDetailView(DetailView):
     model = Client
@@ -58,8 +55,6 @@ class ClientUpdateView(UpdateView):
 
     def get_form_class(self):
         '''группа менеджеров может редактировать определенные поля'''
-        # permission_required = ['main.see_list_of_clients',
-        #                        'main.ban_clients',]
         user = self.request.user
         if user == self.object.owner:
             return ClientForm
@@ -86,8 +81,11 @@ class SettingsListView(ListView):
 
     def get_queryset(self):
         '''просмотр объектов только одного пользователя'''
-        if self.request.user.is_authenticated:
+        if self.request.user.is_superuser:
+            return Settings.objects.all()
+        elif self.request.user.is_authenticated:
             return Settings.objects.filter(owner=self.request.user)
+        raise PermissionDenied
 
 
 class SettingsDetailView(DetailView):
@@ -95,7 +93,7 @@ class SettingsDetailView(DetailView):
     template_name = 'main/setting_detail.html'
 
 
-class SettingsCreateView(LoginRequiredMixin, PermissionRequiredMixin, CreateView):
+class SettingsCreateView(LoginRequiredMixin, CreateView):
     model = Settings
     success_url = reverse_lazy('main:setting_list')
     form_class = SettingsForm
@@ -160,7 +158,9 @@ class MessageListView(ListView):
     template_name = 'main/message_list.html'
 
     def get_queryset(self):
-        if self.request.user.is_authenticated:
+        if self.request.user.is_superuser:
+            return Message.objects.all()
+        elif self.request.user.is_authenticated:
             return Message.objects.filter(owner=self.request.user)
 
 
@@ -169,7 +169,7 @@ class MessageDetailView(DetailView):
     template_name = 'main/message_detail.html'
 
 
-class MessageCreateView(LoginRequiredMixin, PermissionRequiredMixin, CreateView):
+class MessageCreateView(LoginRequiredMixin, CreateView):
     model = Message
     form_class = MessageForm
     success_url = reverse_lazy('main:message_list')

@@ -25,12 +25,14 @@
                     <a class="btn btn-outline-info rounded-pill" href="{% url 'main:client_list' %}">
                         Назад
                     </a>
+                    {% if perms.main.see_list_of_clients and perms.main.ban_clients or user == client.owner %}
                     <a class="btn btn-outline-info rounded-pill" href="{% url 'main:client_update' object.pk %}">
                         Редактировать
                     </a>
                     <a class="btn btn-outline-warning rounded-pill" href="{% url 'main:client_delete' object.pk %}">
                         Удалить
                     </a>
+                    {% endif %}
                 </div>
                 {% endif %}
             </div>

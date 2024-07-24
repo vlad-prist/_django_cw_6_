@@ -6,10 +6,13 @@
 </div>
 <div class="row mb-2">
     {% for setting in object_list %}
-    {% if perms.main.see_any_mailing_settings and perms.main.switch_of_mailing_settings or user == setting.owner %}
+
     <div class="col-md-6">
         <div class="row g-0 border rounded overflow-hidden flex-md-row mb-4 shadow-sm h-md-250 position-relative">
             <div class="col p-4 d-flex flex-column position-static">
+                <p class="card-text mb-4">Автор рассылки:
+                    <strong class="d-inline-block mb-2 text-primary-emphasis">{{ setting.owner }}</strong>
+                </p>
                 <p class="mb-2">Время начала рассылки: {{ setting.start_time }}</p>
                 <p class="mb-2">Время окончания рассылки: {{ setting.end_time }}</p>
                 <p class="mb-2">Период рассылки: {{ setting.period }}</p>
@@ -28,7 +31,7 @@
             </div>
         </div>
     </div>
-    {% endif %}
+
     {% endfor %}
 {% endif %}
 </div>

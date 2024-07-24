@@ -9,16 +9,18 @@
                 <h3 class="mb-2">{{ object.subject }}</h3>
                 <p class="card-text mb-4">{{ object.letter }}</p>
                 <div class="col mb-2">
-                <a class="btn btn-outline-info rounded-pill" href="{% url 'main:message_list' %}">
-                    Назад
-                </a>
-                <a class="btn btn-outline-info rounded-pill" href="{% url 'main:message_update' object.pk %}">
-                    Редактировать
-                </a>
-                <a class="btn btn-outline-warning rounded-pill" href="{% url 'main:message_delete' object.pk %}">
-                    Удалить
-                </a>
-                    </div>
+                    <a class="btn btn-outline-info rounded-pill" href="{% url 'main:message_list' %}">
+                        Назад
+                    </a>
+                    {% if perms.main.change_mailing_message or user == message.owner %}
+                    <a class="btn btn-outline-info rounded-pill" href="{% url 'main:message_update' object.pk %}">
+                        Редактировать
+                    </a>
+                    <a class="btn btn-outline-warning rounded-pill" href="{% url 'main:message_delete' object.pk %}">
+                        Удалить
+                    </a>
+                    {% endif %}
+                </div>
                 {% endif %}
             </div>
         </div>

@@ -6,10 +6,13 @@
 </div>
 <div class="row mb-2">
     {% for client in object_list %}
-    {% if perms.main.see_list_of_clients and perms.main.ban_clients or user == client.owner %}
+
     <div class="col-md-6">
         <div class="row g-0 border rounded overflow-hidden flex-md-row mb-4 shadow-sm h-md-250 position-relative">
             <div class="col p-4 d-flex flex-column position-static">
+                 <p class="card-text mb-4">Автор данного клиента:
+                    <strong class="d-inline-block mb-2 text-primary-emphasis">{{ client.owner }}</strong>
+                </p>
                 {% if client.is_banned %}
                 <div class="alert alert-danger" role="alert">
                     <strong>Внимание!</strong> Пользователь заблокирован
@@ -36,7 +39,7 @@
             </div>
         </div>
     </div>
-    {% endif %}
+
     {% endfor %}
 {% endif %}
 </div>
