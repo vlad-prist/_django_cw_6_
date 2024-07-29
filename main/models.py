@@ -114,7 +114,7 @@ class Attempt(models.Model):
         Client, on_delete=models.SET_NULL, verbose_name="Клиент", **NULLABLE
     )
     settings = models.ForeignKey(
-        Settings, on_delete=models.SET_NULL, verbose_name="Настройки", **NULLABLE
+        Settings, on_delete=models.SET_NULL, verbose_name="Настройки", **NULLABLE, related_name="logs"
     )
     status = models.CharField(
         max_length=10, choices=STATUS_CHOICES, default=STATUS_OK, verbose_name="Статус"

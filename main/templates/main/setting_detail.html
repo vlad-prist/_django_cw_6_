@@ -1,7 +1,7 @@
 {% extends 'main/base.html' %}
 {% block content %}
 <div class="row mb-2">
-    <div class="col-md-12">
+    <div class="col-md-6">
         <div class="row g-0 border rounded overflow-hidden flex-md-row mb-4 shadow-sm h-md-250 position-relative">
             <div class="col p-4 d-flex flex-column position-static">
                 {% if object %}
@@ -27,6 +27,18 @@
                     {% endif %}
                 </div>
                 {% endif %}
+            </div>
+        </div>
+    </div>
+    <div class="col-md-6">
+        <div class="row g-0 border rounded overflow-hidden flex-md-row mb-4 shadow-sm h-md-250 position-relative">
+            <div class="col p-4 d-flex flex-column position-static">
+                {% for log in object.logs.all %}
+                <p class="mb-2">Дата последней попытки: {{ log.last_try }}</p>
+                <p class="mb-2">Клиент(ы): {{ log.client }}</p>
+                <p class="mb-2">Статус: {{ log.status }}</p>
+                <p class="mb-2">Статус рассылки: {{ log.server_response }}</p>
+                {% endfor %}
             </div>
         </div>
     </div>
